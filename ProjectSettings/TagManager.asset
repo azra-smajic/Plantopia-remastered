@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Enemy
+  - Boss
+  - Sword
+  - Wall
+  - Water
+  - BlackGun
+  - YellowGun
+  - RedGun
+  - GreenGun
+  - BlueGun
+  - Fence
+  - CollidePlane
+  - FinishedEnemy
+  - Level1End
+  - Level2End
+  - Level3End
+  - Level4End
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Panel
+  - CineMachineCamera
+  - Fence
+  - Player
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
