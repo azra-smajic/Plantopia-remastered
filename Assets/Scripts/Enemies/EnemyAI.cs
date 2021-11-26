@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.AI;
@@ -17,6 +18,16 @@ namespace planTopia.Enemies
         private LayerMask whatIsPlayer;
         [SerializeField] 
         private float health=100;
+        [SerializeField] 
+        [Range(1,10)]
+        private float helathIncrease;
+        [SerializeField] 
+        [Range(1,10)]
+        private float timeHealthIncrease;
+
+        public bool onDestination=false;
+
+        private float timeDeltaTime;
         private NavMeshAgent agent { get; set; }
         
         //Patroling
@@ -40,16 +51,19 @@ namespace planTopia.Enemies
         private float sightRange, attackRange;
         [SerializeField] 
         private bool playerInSightRange, playerInAttackRange;
+
+        private bool isHidden = false;
         
         //Hide
         [SerializeField] 
         private List<GameObject> hiddenPlaces;
         [SerializeField] 
         private float escapeSpeed;
+
         private Vector3 nextHiddenPlace;
         private bool hiddenPlaceSet;
         private Vector3 distanceToFleePoint;
-        
+
 
         private Collider[] colliders;
         private RaycastHit info;
@@ -58,6 +72,7 @@ namespace planTopia.Enemies
         private void Start()
         {
             agent = this.GetComponent<NavMeshAgent>();
+            timeDeltaTime = Time.time;
         }
 
         private void Update()
@@ -66,9 +81,23 @@ namespace planTopia.Enemies
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
             
             if (health <= 20) Hide();
+            else if (onDestination&&health <= 35) Healed();
             else if(!playerInSightRange&&!playerInAttackRange) Patroling();
             else if (playerInSightRange && !playerInAttackRange) ChasePlayer();
             else if (playerInAttackRange && playerInSightRange) AttackPlayer();
+        }
+
+        private bool IsOnDestination(Vector3 currentPosition, Vector3 nextPosition)
+        {
+            return (currentPosition - nextPosition).magnitude < 1f ? true : false;
+        }
+        private void Healed()
+        {
+            if (onDestination&&Time.time > timeDeltaTime)
+            {
+                health += helathIncrease;
+                timeDeltaTime = Time.time + timeHealthIncrease;
+            }
         }
 
         private void Hide()
@@ -80,16 +109,17 @@ namespace planTopia.Enemies
             {
                 agent.SetDestination(nextHiddenPlace);
                 agent.speed = escapeSpeed;
+                onDestination = false;
             }
-            
-            distanceToFleePoint = transform.position - nextHiddenPlace;
-            
-            if (distanceToFleePoint.magnitude < 1f)
+
+            if (IsOnDestination(transform.position, nextHiddenPlace))
+            {
                 hiddenPlaceSet = false;
-            
+                onDestination = true;
+            }
 
+            Healed();
         }
-
         private void NextFleePoint()
         {
             nextHiddenPlace = hiddenPlaces[UnityEngine.Random.Range(0, hiddenPlaces.Count)].transform.position;
@@ -105,10 +135,12 @@ namespace planTopia.Enemies
             }
             else NextWalkPoint();
             
-            DistanceToWalkPoint = transform.position - walkPoint;
-
-            if (DistanceToWalkPoint.magnitude < 1f)
+            if (IsOnDestination(transform.position, walkPoint))
                 walkPointSet = false;
+
+            onDestination = IsOnDestination(transform.position, walkPoint);
+            if(health<100)
+                Healed();
         }
         
         private void NextWalkPoint()
@@ -118,6 +150,7 @@ namespace planTopia.Enemies
         }
         private void AttackPlayer()
         {
+            onDestination = false;
             agent.SetDestination(transform.position);
             // transform.LookAt(Player);
             LookAtPlayer();
@@ -154,6 +187,8 @@ namespace planTopia.Enemies
         private void ResetAttack()=>alreadyAttacked = false;
         private void ChasePlayer()
         {
+            onDestination = false;
+
             agent.SetDestination(player.position);
             // transform.LookAt(Player);
             LookAtPlayer();
