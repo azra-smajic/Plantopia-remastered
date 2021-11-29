@@ -61,8 +61,16 @@ namespace planTopia.Controllers.Player
                                 // hitInfo.collider.gameObject.GetComponent<EnemyHealthRegulator>()?.DecreaseHealth(shootingAttributes.Damage);
                                 // BaseGenericsEnemy.startMove = false;
                                 // Object.GetComponent<DizzyActivator>().StartDizzy();
-                                
-                                Object.GetComponent<EnemyAI>().TakeDamage(shootingAttributes.Damage);
+
+                                if (Object.GetComponent<BossAI>() != null)
+                                {
+                                    Object.GetComponent<BossAI>().TakeDamage(shootingAttributes.Damage);
+                                }
+                                else if (Object.GetComponent<EnemyAI>() != null)
+                                {
+                                    Object.GetComponent<EnemyAI>().TakeDamage(shootingAttributes.Damage);
+                                }
+
                             }
                         }
                         Debug.DrawLine(ray.origin, hitInfo.point, Color.red, 4f);

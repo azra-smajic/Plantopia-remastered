@@ -15,31 +15,34 @@ namespace planTopia.Enemies
 
         [SerializeField]
         private ParticleSystem ParticleSystemStart;
+       
 
-
-        private float NextRate { get; set; }
-        public Transform Player { get; set; }
+        private float NextRate { get; set; } = 2;
+        public Transform Player;
         [SerializeField]
         private AudioSource Audio;
 
 
         private Ray ray;
         private RaycastHit hitInfo;
-       
-   
 
-
-
-        public void OnStartFiring()
+        private void Start()
         {
+            NextRate = Time.time;
+        }
+
+
+
+        public void OnStartFiring(float FireRate)
+       {
             if (Time.time > NextRate && !Player.GetComponent<PlayerHealth>().isDeath)
             {
                 NextRate = Time.time + shootingAttributes.FireRate;
-                Transform ShootingPoint = this.transform.Find("gunpoint");
+                Transform ShootingPoint = this.transform;
                 var direction= Player.position - ShootingPoint.position;
                 if (direction.magnitude < shootingAttributes.ShootingDistance)
                 {
-                    NextRate = Time.time + shootingAttributes.FireRate;
+                    NextRate = Time.time + FireRate;
                     ray.origin = gameObject.transform.position;
                     ray.direction = direction;
 

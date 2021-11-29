@@ -38,12 +38,12 @@ namespace planTopia.Enemies
         private Vector3 walkPoint;
         private bool walkPointSet;
         private Vector3 DistanceToWalkPoint;
-
+        [SerializeField]
+        private EnemyShooting EnemyShooting;
         //Attacking
         [SerializeField] 
         private float timeBetweenAttacks;
-        [SerializeField]
-        public GameObject projectile;
+        
         private bool alreadyAttacked;
 
         //States
@@ -156,26 +156,7 @@ namespace planTopia.Enemies
             LookAtPlayer();
             if (!alreadyAttacked)
             {
-                ray.origin = transform.position;
-                ray.direction = player.position - transform.position;
-                
-                if (Physics.Raycast(ray, out info))
-                {
-                    if (info.collider.gameObject.tag == Constants.Tag.PLAYER)
-                    {
-                        GameObject projectile = Instantiate(this.projectile, transform.position, Quaternion.identity);
-                        Rigidbody rb = projectile.GetComponent<Rigidbody>();
-
-                        float dist=Vector3.Distance(player.position, transform.position);
-                        
-                        rb.AddForce(transform.forward * dist*2, ForceMode.Impulse);
-                        rb.AddForce(transform.up * 1.4f, ForceMode.Impulse);
-                        
-                        alreadyAttacked = true;
-                        Invoke(nameof(ResetAttack), timeBetweenAttacks);
-
-                    }
-                }
+              EnemyShooting.OnStartFiring(timeBetweenAttacks);
             }
         }
 

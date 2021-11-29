@@ -33,7 +33,7 @@ namespace planTopia.Enemies
                 if (enemyShooting != null)
                 {
                     enemyShooting.Player = EnemieController.Player;
-                    enemyShooting.OnStartFiring();
+                   // enemyShooting.OnStartFiring();
                 }
 
             }
