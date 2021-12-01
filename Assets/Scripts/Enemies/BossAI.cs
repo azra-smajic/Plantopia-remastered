@@ -140,10 +140,9 @@ namespace planTopia.Enemies
             agent.SetDestination(transform.position);
             // transform.LookAt(Player);
             LookAtPlayer();
-            if (!alreadyAttacked)
-            {
+            
                 EnemyShooting.OnStartFiring(timeBetweenAttacks);
-            }
+            
         }
 
         private void DestroyProjectile(GameObject obj)

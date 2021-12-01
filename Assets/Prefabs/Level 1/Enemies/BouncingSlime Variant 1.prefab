@@ -1,17 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &5006293418120510306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 10938002529909746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e32b209a570af44fba69df305465253, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2041996496005909920
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,7 +29,7 @@ Transform:
   m_Children:
   - {fileID: 4785954481411235606}
   m_Father: {fileID: 2508157309647241444}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &-5270867299034038367
 AudioSource:
@@ -246,7 +234,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8e5adb3004157f24385e3de1f02cc1ce, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -345,6 +333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootingAttributes: {fileID: 11400000, guid: 8ba1e56bf7999a64ebc2197277e5da60, type: 2}
   ParticleSystemStart: {fileID: 3164551124025732429}
+  Player: {fileID: 0}
   Audio: {fileID: 3801158723572512593}
 --- !u!114 &5501228951531215320
 MonoBehaviour:
@@ -5278,10 +5267,5 @@ Transform:
 --- !u!95 &2561624350012538150 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6730509703474376819, guid: d2176c22953a0114b81b82603a618e0b, type: 3}
-  m_PrefabInstance: {fileID: 9145444340667256149}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &10938002529909746 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9137233145539393191, guid: d2176c22953a0114b81b82603a618e0b, type: 3}
   m_PrefabInstance: {fileID: 9145444340667256149}
   m_PrefabAsset: {fileID: 0}

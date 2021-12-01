@@ -28,6 +28,7 @@ namespace planTopia.Enemies
 
         private void Start()
         {
+            ParticleSystemStart.Stop();
             NextRate = Time.time;
         }
 

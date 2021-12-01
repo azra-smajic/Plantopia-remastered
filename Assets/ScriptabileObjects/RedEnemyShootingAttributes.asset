@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: RedEnemyShootingAttributes
   m_EditorClassIdentifier: 
   Damage: 1
-  ShootingDistance: 1
+  ShootingDistance: 2
   FireRate: 1.5
   MaxAmmunation: 50
   CurrentAmmunation: 0
   Weapon: {fileID: 0}
-  Sound: {fileID: 0}
+  GunSound: {fileID: 0}
   UIImage: {fileID: 0}

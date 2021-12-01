@@ -22,8 +22,7 @@ public class SimpleCollectibleScript : MonoBehaviour {
 	private float rotationSpeed;
 	[SerializeField]
 	private AudioClip collectSound;
-	[SerializeField]
-	private GameObject collectEffect;
+	
 
 	void Start () {
 		
@@ -31,8 +30,7 @@ public class SimpleCollectibleScript : MonoBehaviour {
 	
 	void Update () {
 
-		if (rotate)
-			transform.Rotate (Vector3.up * rotationSpeed * Time.deltaTime, Space.World);
+		
 
 	}
 
@@ -49,8 +47,7 @@ public class SimpleCollectibleScript : MonoBehaviour {
 			return;
 		if (collectSound)
 			AudioSource.PlayClipAtPoint(collectSound, transform.position);
-		if(collectEffect)
-			Instantiate(collectEffect, transform.position, Quaternion.identity);
+		
 
 		if (CollectibleType == CollectibleTypes.NoType) {
 
