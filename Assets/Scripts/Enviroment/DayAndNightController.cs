@@ -47,8 +47,8 @@ namespace planTopia.Enviroment
         [SerializeField] 
         private float maxMoonLightIntensity;
         
-        [SerializeField] 
-        private bool isDay;
+      
+        public bool isDay;
         
         [SerializeField] 
         private GameObject Enemies;
@@ -67,7 +67,7 @@ namespace planTopia.Enviroment
         private TimeSpan sunriseToSunsetDuration => CalculateTimeDifference(sunriseTime, sunsetTime);
         private TimeSpan sunsetToSunriseDuration => CalculateTimeDifference(sunsetTime, sunriseTime);
 
-        //public Action<bool> OnTimeOfDayChanged;
+        public Action<bool> OnTimeOfDayChanged;
         
         
         void Start()
@@ -139,15 +139,28 @@ namespace planTopia.Enviroment
                 
                 isDay = false;
             }
-            
-            //OnTimeOfDayChanged?.Invoke(isDay);
 
-            if (isDay) Enemies.SetActive(false);
-            else Enemies.SetActive(true);
-            
+
+            if (isDay)
+            {
+
+               
+                Enemies.SetActive(false);
+               
+
+
+            }
+            else {
+                
+                Enemies.SetActive(true);
+                
+
+            }
+            OnTimeOfDayChanged?.Invoke(isDay);
+
             sunLight.transform.rotation = Quaternion.AngleAxis(sunLightRotation, Vector3.right);
         }
-        
+     
         private IEnumerator WaitAndPrint(float waitTime)
         {
             while (true)

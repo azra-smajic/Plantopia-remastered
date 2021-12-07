@@ -21,6 +21,7 @@ TagManager:
   - Level2End
   - Level3End
   - Level4End
+  - DayNight
   layers:
   - Default
   - TransparentFX
