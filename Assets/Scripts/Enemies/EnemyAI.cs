@@ -63,7 +63,8 @@ namespace planTopia.Enemies
         private Vector3 nextHiddenPlace;
         private bool hiddenPlaceSet;
         private Vector3 distanceToFleePoint;
-
+        [SerializeField]
+        private ParticleSystem[] particles;
 
         private Collider[] colliders;
         private RaycastHit info;
@@ -186,10 +187,17 @@ namespace planTopia.Enemies
         }
         public void TakeDamage(float damage)
         {
+            particles[0].Play();
+            particles[1].Play();
+            particles[2].Play();
+
             health -= damage;
-            
-            if(health<=0)
+
+            if (health <= 0)
+            {
+                particles[3].Play();
                 Invoke(nameof(DestroyEnemy), .5f);
+            }
         }
 
         private void DestroyEnemy()
