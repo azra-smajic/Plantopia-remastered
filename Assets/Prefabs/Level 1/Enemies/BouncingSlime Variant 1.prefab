@@ -5567,15 +5567,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19827798, guid: 71f41880794ca1941a088c95db570547, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 19872370, guid: 71f41880794ca1941a088c95db570547, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 19888464, guid: 71f41880794ca1941a088c95db570547, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 19888620, guid: 71f41880794ca1941a088c95db570547, type: 3}
       propertyPath: cullingMode
@@ -5587,7 +5587,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19888620, guid: 71f41880794ca1941a088c95db570547, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 19888620, guid: 71f41880794ca1941a088c95db570547, type: 3}
       propertyPath: InitialModule.startSize.scalar
@@ -5599,7 +5599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19889960, guid: 71f41880794ca1941a088c95db570547, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 19903064, guid: 71f41880794ca1941a088c95db570547, type: 3}
       propertyPath: m_Materials.Array.size

@@ -60,6 +60,9 @@ namespace planTopia.Enviroment
 
         private TimeSpan sunsetTime;
 
+        private TimeSpan timeSinceSunrise;
+        private TimeSpan timeSinceSunset;
+
         private float nextTime;
 
         private double percentage;
@@ -111,7 +114,7 @@ namespace planTopia.Enviroment
 
             if (currentTime.TimeOfDay > sunriseTime && currentTime.TimeOfDay < sunsetTime)
             {
-                TimeSpan timeSinceSunrise = CalculateTimeDifference(sunriseTime, currentTime.TimeOfDay);
+                timeSinceSunrise = CalculateTimeDifference(sunriseTime, currentTime.TimeOfDay);
 
                 percentage = timeSinceSunrise.TotalMinutes / sunriseToSunsetDuration.TotalMinutes;
                
@@ -131,7 +134,7 @@ namespace planTopia.Enviroment
             }
             else
             {
-                TimeSpan timeSinceSunset = CalculateTimeDifference(sunsetTime, currentTime.TimeOfDay);
+                timeSinceSunset = CalculateTimeDifference(sunsetTime, currentTime.TimeOfDay);
 
                 percentage = timeSinceSunset.TotalMinutes / sunsetToSunriseDuration.TotalMinutes;
 
@@ -139,35 +142,33 @@ namespace planTopia.Enviroment
                 
                 isDay = false;
             }
-
-
-            if (isDay)
-            {
-
-               
-                Enemies.SetActive(false);
-               
-
-
-            }
-            else {
-                
-                Enemies.SetActive(true);
-                
-
-            }
-            OnTimeOfDayChanged?.Invoke(isDay);
+            
+            OnTimeOfDayChangedInvoke();
 
             sunLight.transform.rotation = Quaternion.AngleAxis(sunLightRotation, Vector3.right);
         }
-     
-        private IEnumerator WaitAndPrint(float waitTime)
+
+        private void OnTimeOfDayChangedInvoke()
         {
-            while (true)
+            if (isDay)
             {
-                yield return new WaitForSeconds(waitTime);
+                OnTimeOfDayChanged?.Invoke(isDay);
+                Invoke(nameof(SetEnemiesActiveFalse), 1.0f);
+            }
+            else
+            {
+                Enemies.SetActive(true);
+                OnTimeOfDayChanged?.Invoke(isDay);
             }
         }
+        private void SetEnemiesActiveFalse() => Enemies.SetActive(false);
+        // private IEnumerator WaitAndPrint(float waitTime)
+        // {
+        //     while (true)
+        //     {
+        //         yield return new WaitForSeconds(waitTime);
+        //     }
+        // }
 
         private void UpdateLightSettings()
         {

@@ -77,7 +77,6 @@ namespace planTopia.Enemies
             attackRange = 2.5f;
             timeDeltaTime = Time.time;
         }
-
         private void Update()
         {
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
@@ -202,7 +201,7 @@ namespace planTopia.Enemies
 
         private void DestroyEnemy()
         {
-            Destroy(gameObject);
+            this.gameObject.SetActive(false);
         }
 
         private void OnDrawGizmosSelected()

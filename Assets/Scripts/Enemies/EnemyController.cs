@@ -8,6 +8,10 @@ namespace planTopia.Enemies
     {
         [SerializeField]
         private Speed speed;
+        [SerializeField]
+        private ParticleSystem particleNight;
+        [SerializeField]
+        private ParticleSystem particleDay;
   
         public Transform Player { get; set; }
         private Rigidbody Rigidbody { get; set; }
@@ -15,10 +19,8 @@ namespace planTopia.Enemies
         private DayAndNightController dayAndNightController { get; set; }
         bool isDayEnemy;
         public bool isDayParicle=true;
-        [SerializeField]
-        private ParticleSystem particleNight;
-        [SerializeField]
-        private ParticleSystem particleDay;
+
+
 
 
         private void Start()
@@ -32,13 +34,11 @@ namespace planTopia.Enemies
         {
             if (isDayParicle != isDay)
             {
-                
-                isDayParicle = isDay;
-
-                if (isDayParicle == false)
-                    particleNight.Play();
-                else
+                if (isDay) 
                     particleDay.Play();
+                //else
+                    //particleNight.Play();
+                    isDayParicle = isDay;
             }
 
         }
