@@ -5135,7 +5135,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5421745291801862314, guid: 3cec54abc42f839478b2731b324f0b2b, type: 3}
       propertyPath: m_Name
-      value: Player (1)
+      value: Player (1) Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5421745291801862314, guid: 3cec54abc42f839478b2731b324f0b2b, type: 3}
       propertyPath: m_Layer
