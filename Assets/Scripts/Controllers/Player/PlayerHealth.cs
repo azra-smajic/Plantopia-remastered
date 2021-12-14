@@ -40,6 +40,8 @@ namespace planTopia.Controllers.Player
         private Transform GameOver;
         [SerializeField]
         private GameObject GameOverImage;
+        [SerializeField]
+        private CameraShake CameraShake;
         private PlayerAnimationController Animator { get; set; }
         private PlayerController Controller { get; set; }
         private Weapon Weapons { get; set; }
@@ -121,6 +123,7 @@ namespace planTopia.Controllers.Player
         {
             CurrentHealth -= damage;
             HealthSlider.value = CurrentHealth;
+            CameraShake.StartShake();
             CheckDeath();
             AudioManager.Play(DecreaseHealthSound);
         }
