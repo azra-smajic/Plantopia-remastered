@@ -10,13 +10,15 @@ namespace planTopia.Enviroment
 public class DayNightRotation : MonoBehaviour
     {
         [SerializeField]
-        [Tooltip("Day duration in minutes")]
-        private int DayDuration = 1;
+       
+        private float DayDuration = 0.5f;
         [SerializeField]
-        [Tooltip("Night duration in minutes")]
-        private int NightDuration = 1;
+       
+        private float NightDuration = 1;
         [SerializeField] 
         private GameObject Enemies;
+        [SerializeField]
+        private GameObject SpecialObjects;
         [SerializeField]
         private Light Sun;
         [SerializeField] 
@@ -32,8 +34,8 @@ public class DayNightRotation : MonoBehaviour
 
         [SerializeField] 
         private Color nightAmbientLight;
-        private long DayDurationMillisecond => DayDuration * 60000; // there are 60000 milliseconds in a minute 
-        private long NightDurationMillisecond => NightDuration * 60000; // there are 60000 milliseconds in a minute
+        private double DayDurationMillisecond => DayDuration * 60000; // there are 60000 milliseconds in a minute 
+        private double NightDurationMillisecond => NightDuration * 60000; // there are 60000 milliseconds in a minute
         private Stopwatch ElapsedTime { get; set; }
 
         [SerializeField]
@@ -95,11 +97,17 @@ public class DayNightRotation : MonoBehaviour
             }
             else
             {
+                
                 Enemies.SetActive(true);
                 OnTimeOfDayChanged?.Invoke(IsDay);
             }
         }
-        private void SetEnemiesActiveFalse() => Enemies.SetActive(false);
+        private void SetEnemiesActiveFalse() {
+            Enemies.SetActive(false);
+            
+
+
+        }
         private void UpdateLightSettings()
         {
             float dotProduct = Vector3.Dot(Sun.transform.forward, Vector3.down);

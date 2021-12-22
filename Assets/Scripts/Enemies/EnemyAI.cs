@@ -73,8 +73,10 @@ namespace planTopia.Enemies
         private void Start()
         {
             agent = this.GetComponent<NavMeshAgent>();
-            sightRange = 3;
-            attackRange = 2.5f;
+            sightRange = 8;
+            attackRange = 3f;
+            patrolingSpeed=0.7f;
+            agent.speed = 4;
             timeDeltaTime = Time.time;
         }
         private void Update()

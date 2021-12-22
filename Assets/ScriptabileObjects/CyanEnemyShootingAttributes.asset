@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16876d48ce53485458c68e9dad8d7baa, type: 3}
   m_Name: CyanEnemyShootingAttributes
   m_EditorClassIdentifier: 
-  Damage: 2
-  ShootingDistance: 2
-  FireRate: 4
+  Damage: 3
+  ShootingDistance: 0.9
+  FireRate: 0.5
   MaxAmmunation: 50
   CurrentAmmunation: 0
   Weapon: {fileID: 0}

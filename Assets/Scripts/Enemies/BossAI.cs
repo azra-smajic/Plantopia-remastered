@@ -24,7 +24,8 @@ namespace planTopia.Enemies
         [SerializeField] 
         [Range(1,10)]
         private float timeHealthIncrease=3;
-  
+        [SerializeField]
+        private ParticleSystem[] particles;
 
 
         private float timeDeltaTime;
@@ -169,15 +170,21 @@ namespace planTopia.Enemies
         }
         public void TakeDamage(float damage)
         {
+            particles[0].Play();
+            particles[1].Play();
+            particles[2].Play();
             health -= damage;
-            
-            if(health<=0)
-                Invoke(nameof(DestroyEnemy), .5f);
+
+            if (health <= 0)
+            {
+                particles[3].Play();
+                Invoke(nameof(DestroyEnemy), 2f);
+            }
         }
 
         private void DestroyEnemy()
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
         private void OnDrawGizmosSelected()

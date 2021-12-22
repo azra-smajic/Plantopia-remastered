@@ -46,8 +46,11 @@ namespace planTopia.Enemies
                     NextRate = Time.time + FireRate;
                     ray.origin = gameObject.transform.position;
                     ray.direction = direction;
-
-                    ParticleSystemStart.Play();
+                    if (this.GetComponent<Fireball>() != null){
+                        this.GetComponent<Fireball>().Push(direction, 4);
+                    }
+                    else
+                     ParticleSystemStart.Play();
                     Audio.Play();
                     if (Physics.Raycast(ray, out hitInfo))
                     {
