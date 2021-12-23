@@ -163,13 +163,6 @@ namespace planTopia.Enemies
               EnemyShooting.OnStartFiring(timeBetweenAttacks);
             }
         }
-
-        private void DestroyProjectile(GameObject obj)
-        {
-            Destroy(obj);
-        }
-
-        private void ResetAttack()=>alreadyAttacked = false;
         private void ChasePlayer()
         {
             onDestination = false;

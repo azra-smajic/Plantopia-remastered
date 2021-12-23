@@ -14,7 +14,7 @@ namespace planTopia.Enviroment
         }
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log(other.gameObject.name);
+            other.gameObject.SetActive(false);
 
             switch (other.gameObject.tag)
             {

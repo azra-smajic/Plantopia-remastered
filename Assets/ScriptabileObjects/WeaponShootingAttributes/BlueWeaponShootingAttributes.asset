@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16876d48ce53485458c68e9dad8d7baa, type: 3}
   m_Name: BlueWeaponShootingAttributes
   m_EditorClassIdentifier: 
-  Damage: 1
+  Damage: 3
   ShootingDistance: 3
   FireRate: 0.4
   MaxAmmunation: 30

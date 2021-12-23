@@ -11,10 +11,10 @@ public class DayNightRotation : MonoBehaviour
     {
         [SerializeField]
        
-        private float DayDuration = 0.5f;
+        private float DayDuration = 0.1f;
         [SerializeField]
        
-        private float NightDuration = 1;
+        private float NightDuration = 0.1f;
         [SerializeField] 
         private GameObject Enemies;
         [SerializeField]
@@ -93,21 +93,16 @@ public class DayNightRotation : MonoBehaviour
             if (IsDay)
             {
                 OnTimeOfDayChanged?.Invoke(IsDay);
-                Invoke(nameof(SetEnemiesActiveFalse), 1.0f);
+                Invoke(nameof(SetEnemiesActiveFalse), 1.4f);
             }
             else
             {
-                
                 Enemies.SetActive(true);
                 OnTimeOfDayChanged?.Invoke(IsDay);
             }
         }
-        private void SetEnemiesActiveFalse() {
-            Enemies.SetActive(false);
-            
-
-
-        }
+        private void SetEnemiesActiveFalse() =>Enemies.SetActive(false);
+        
         private void UpdateLightSettings()
         {
             float dotProduct = Vector3.Dot(Sun.transform.forward, Vector3.down);
