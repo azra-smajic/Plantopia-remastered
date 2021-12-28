@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using planTopia.Core;
+using planTopia.ScriptabileObjects;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -10,7 +12,6 @@ namespace planTopia.Enviroment
 public class DayNightRotation : MonoBehaviour
     {
         [SerializeField]
-       
         private float DayDuration = 0.1f;
         [SerializeField]
        
@@ -40,15 +41,26 @@ public class DayNightRotation : MonoBehaviour
 
         [SerializeField]
         private bool IsDay;
+
+        [SerializeField]
+        private SFX DaySound;
+        [SerializeField]
+        private SFX NightSound;
         private float angle;
         public Action<bool> OnTimeOfDayChanged;
+
+
+        [SerializeField] 
+        private AudioManager AudioManager;
+        private float t = 0;
         private void Start()
         {
             IsDay = true;
             ElapsedTime = new Stopwatch();
             ElapsedTime.Start();
+            AudioManager.CheckIsDay(IsDay);
+            AudioManager.SetBackGroundMusic();
         }
-        private float t = 0;
         private void Update()
         {
             RotateSun();
@@ -68,6 +80,8 @@ public class DayNightRotation : MonoBehaviour
                     IsDay = false;
                     ElapsedTime.Restart();
                     t = 0;
+                    AudioManager.Play(NightSound);
+                    AudioManager.CheckIsDay(IsDay);
                 }
             }
             else
@@ -81,6 +95,8 @@ public class DayNightRotation : MonoBehaviour
                     IsDay = true;
                     ElapsedTime.Restart();
                     t = 0;
+                    AudioManager.Play(DaySound);
+                    AudioManager.CheckIsDay(IsDay);
                 }
             }
             angle = Mathf.Lerp(IsDay ? 0 : 180, IsDay ? 180 : 360, t);

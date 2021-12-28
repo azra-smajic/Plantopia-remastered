@@ -21,12 +21,10 @@ namespace planTopia.Controllers.Player
         public float CurrentHealth;
 
 
-        public Slider HealthSlider;
+        public Image HealthBar;
 
         public Text HealthText;
-
-        [SerializeField]
-        private SFX BackgroundSound;
+        
         [SerializeField]
         private SFX DeathSound;
         [SerializeField]
@@ -42,11 +40,12 @@ namespace planTopia.Controllers.Player
         private GameObject GameOverImage;
         [SerializeField]
         private CameraShake CameraShake;
+        [SerializeField]
+        private AudioManager AudioManager;
         private PlayerAnimationController Animator { get; set; }
         private PlayerController Controller { get; set; }
         private Weapon Weapons { get; set; }
         public Transform StartPosition;
-        private AudioManager AudioManager { get; set; }
 
         private float NextDecreaseHealth;
         public bool isDeath = false;
@@ -57,10 +56,8 @@ namespace planTopia.Controllers.Player
             Animator = this.GetComponent<PlayerAnimationController>();
             Controller = this.GetComponent<PlayerController>();
             Weapons = this.GetComponent<Weapon>();
-            AudioManager = this.GetComponent<AudioManager>();
             HealthText.text = CurrentHealth.ToString() + "%";
             CountOfLifes = Hearts?.Count ?? 0;
-            AudioManager.Play(BackgroundSound);
         }
         private void OnEnable()
         {
@@ -78,7 +75,7 @@ namespace planTopia.Controllers.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == Constants.Tag.Water)
+            if (other.gameObject.CompareTag(Constants.Tag.Water))
             {
                 CurrentHealth = 0;
                 CheckDeath();
@@ -99,21 +96,19 @@ namespace planTopia.Controllers.Player
                 CountOfLifes = Hearts?.Count ?? 0;
                 GameOverImage.gameObject.SetActive(true);
                 Invoke(nameof(SetGameOverImageFalse), 3f);
-                AudioManager.Pause();
                 AudioManager.Play(GameOverSound);
-                Invoke(nameof(PlayBackgroundSound), 3.25f);
             }
         }
 
-        private void PlayBackgroundSound() => AudioManager.Play(BackgroundSound);
+
         private void SetGameOverImageFalse() => GameOverImage.gameObject.SetActive(false);
 
         private void DecreaseHealthOnTime()
         {
             if (Time.time > NextDecreaseHealth && !isDeath)
             {
-                CurrentHealth -= DecrementHealth;
-                HealthSlider.value = CurrentHealth;
+                CurrentHealth -=DecrementHealth;
+                HealthBar.fillAmount = CurrentHealth/100;
                 NextDecreaseHealth = Time.time + TimeOfDecreaseHealth;
                 CheckDeath();
             }
@@ -122,7 +117,7 @@ namespace planTopia.Controllers.Player
         public void DecreaseHealth(float damage)
         {
             CurrentHealth -= damage;
-            HealthSlider.value = CurrentHealth;
+            HealthBar.fillAmount = CurrentHealth/100;
             CameraShake.StartShake();
             CheckDeath();
             AudioManager.Play(DecreaseHealthSound);
@@ -166,7 +161,7 @@ namespace planTopia.Controllers.Player
         private void SetDefaultSettings()
         {
             CurrentHealth = MaxHealth;
-            HealthSlider.value = MaxHealth;
+            HealthBar.fillAmount = MaxHealth/100;
             HealthText.text = MaxHealth.ToString() + "%";
             Animator.SetTriggerIDLE();
             Controller.startMove = true;

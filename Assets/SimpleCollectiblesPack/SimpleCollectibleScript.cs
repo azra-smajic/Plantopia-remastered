@@ -69,7 +69,7 @@ public class SimpleCollectibleScript : MonoBehaviour {
 				player.GetComponent<PlayerHealth>().HealthText.text = player.GetComponent<PlayerHealth>().CurrentHealth+"%";
 
 			}
-			player.GetComponent<PlayerHealth>().HealthSlider.value = player.GetComponent<PlayerHealth>().CurrentHealth;
+			player.GetComponent<PlayerHealth>().HealthBar.fillAmount = player.GetComponent<PlayerHealth>().CurrentHealth/100;
 		}
 		if (CollectibleType == CollectibleTypes.Life)
 		{

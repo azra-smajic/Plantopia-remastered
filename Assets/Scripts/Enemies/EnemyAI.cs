@@ -10,61 +10,47 @@ using Random = System.Random;
 
 namespace planTopia.Enemies
 {
-    public class EnemyAI: MonoBehaviour
+    public class EnemyAI : MonoBehaviour
     {
-        [SerializeField] 
-        private Transform player;
-        [SerializeField] 
-        private LayerMask whatIsPlayer;
-        [SerializeField] 
-        private float health=100;
-        [SerializeField] 
-        [Range(1,10)]
-        private float helathIncrease;
-        [SerializeField] 
-        [Range(1,10)]
-        private float timeHealthIncrease;
+        [SerializeField] private Transform player;
+        [SerializeField] private LayerMask whatIsPlayer;
+        [SerializeField] private float health = 100;
+        [SerializeField] [Range(1, 10)] private float helathIncrease;
+        [SerializeField] [Range(1, 10)] private float timeHealthIncrease;
 
-        public bool onDestination=false;
+        public bool onDestination = false;
 
         private float timeDeltaTime;
         private NavMeshAgent agent { get; set; }
-        
+
         //Patroling
-        [SerializeField] 
-        private List<GameObject> patrolingPositions;
-        [SerializeField] 
-        float patrolingSpeed;
+        [SerializeField] private List<GameObject> patrolingPositions;
+        [SerializeField] float patrolingSpeed;
         private Vector3 walkPoint;
         private bool walkPointSet;
         private Vector3 DistanceToWalkPoint;
-        [SerializeField]
-        private EnemyShooting EnemyShooting;
+
+        [SerializeField] private EnemyShooting EnemyShooting;
+
         //Attacking
-        [SerializeField] 
-        private float timeBetweenAttacks;
-        
+        [SerializeField] private float timeBetweenAttacks;
+
         private bool alreadyAttacked;
 
         //States
-        [SerializeField] 
-        private float sightRange, attackRange;
-        [SerializeField] 
-        private bool playerInSightRange, playerInAttackRange;
+        [SerializeField] private float sightRange, attackRange;
+        [SerializeField] private bool playerInSightRange, playerInAttackRange;
 
         private bool isHidden = false;
-        
+
         //Hide
-        [SerializeField] 
-        private List<GameObject> hiddenPlaces;
-        [SerializeField] 
-        private float escapeSpeed;
+        [SerializeField] private List<GameObject> hiddenPlaces;
+        [SerializeField] private float escapeSpeed;
 
         private Vector3 nextHiddenPlace;
         private bool hiddenPlaceSet;
         private Vector3 distanceToFleePoint;
-        [SerializeField]
-        private ParticleSystem[] particles;
+        [SerializeField] private ParticleSystem[] particles;
 
         private Collider[] colliders;
         private RaycastHit info;
@@ -73,20 +59,18 @@ namespace planTopia.Enemies
         private void Start()
         {
             agent = this.GetComponent<NavMeshAgent>();
-            sightRange = 8;
-            attackRange = 3f;
-            patrolingSpeed=0.7f;
-            agent.speed = 4;
+
             timeDeltaTime = Time.time;
         }
+
         private void Update()
         {
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-            
+
             if (health <= 20) Hide();
-            else if (onDestination&&health <= 35) Healed();
-            else if(!playerInSightRange&&!playerInAttackRange) Patroling();
+            else if (onDestination && health <= 35) Healed();
+            else if (!playerInSightRange && !playerInAttackRange) Patroling();
             else if (playerInSightRange && !playerInAttackRange) ChasePlayer();
             else if (playerInAttackRange && playerInSightRange) AttackPlayer();
         }
@@ -95,9 +79,10 @@ namespace planTopia.Enemies
         {
             return (currentPosition - nextPosition).magnitude < 1f ? true : false;
         }
+
         private void Healed()
         {
-            if (onDestination&&Time.time > timeDeltaTime)
+            if (onDestination && Time.time > timeDeltaTime)
             {
                 health += helathIncrease;
                 timeDeltaTime = Time.time + timeHealthIncrease;
@@ -106,10 +91,10 @@ namespace planTopia.Enemies
 
         private void Hide()
         {
-            if(!hiddenPlaceSet)
+            if (!hiddenPlaceSet)
                 NextFleePoint();
-            
-            if (playerInAttackRange&&hiddenPlaceSet)
+
+            if (playerInAttackRange && hiddenPlaceSet)
             {
                 agent.SetDestination(nextHiddenPlace);
                 agent.speed = escapeSpeed;
@@ -124,6 +109,7 @@ namespace planTopia.Enemies
 
             Healed();
         }
+
         private void NextFleePoint()
         {
             nextHiddenPlace = hiddenPlaces[UnityEngine.Random.Range(0, hiddenPlaces.Count)].transform.position;
@@ -138,47 +124,47 @@ namespace planTopia.Enemies
                 agent.speed = patrolingSpeed;
             }
             else NextWalkPoint();
-            
+
             if (IsOnDestination(transform.position, walkPoint))
                 walkPointSet = false;
 
             onDestination = IsOnDestination(transform.position, walkPoint);
-            if(health<100)
+            if (health < 100)
                 Healed();
         }
-        
+
         private void NextWalkPoint()
         {
             walkPoint = patrolingPositions[UnityEngine.Random.Range(0, patrolingPositions.Count)].transform.position;
             walkPointSet = true;
         }
+
         private void AttackPlayer()
         {
             onDestination = false;
             agent.SetDestination(transform.position);
-            // transform.LookAt(Player);
             LookAtPlayer();
             if (!alreadyAttacked)
             {
-              EnemyShooting.OnStartFiring(timeBetweenAttacks);
+                EnemyShooting.OnStartFiring(timeBetweenAttacks);
             }
         }
+
         private void ChasePlayer()
         {
             onDestination = false;
-
             agent.SetDestination(player.position);
-            // transform.LookAt(Player);
             LookAtPlayer();
         }
 
         private void LookAtPlayer()
         {
             Vector3 direction = (player.position - transform.position).normalized;
-            
-            Quaternion lookRoration=Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-            transform.rotation=Quaternion.Slerp(transform.rotation, lookRoration, Time.deltaTime*5f);
+
+            Quaternion lookRoration = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRoration, Time.deltaTime * 5f);
         }
+
         public void TakeDamage(float damage)
         {
             particles[0].Play();
@@ -201,11 +187,10 @@ namespace planTopia.Enemies
 
         private void OnDrawGizmosSelected()
         {
-            Gizmos.color=Color.red;
+            Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, attackRange);
-            Gizmos.color=Color.yellow;
+            Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, sightRange);
-            
         }
     }
 }

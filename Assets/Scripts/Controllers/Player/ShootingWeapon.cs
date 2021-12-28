@@ -21,10 +21,12 @@ namespace planTopia.Controllers.Player
         private Text UIAmmunationText;
         [SerializeField]
         private ParticleSystem ParticleShoot;
+        [SerializeField]
+        private AudioManager AudioManager;
         private ShootingAttributes shootingAttributes { get; set; }
         private SFX CurrentGunSound { get; set; }
         private GameObject Object { get; set; }
-        private AudioManager AudioManager { get; set; }
+
 
         private float NextRate;
         private Ray ray;
@@ -33,7 +35,6 @@ namespace planTopia.Controllers.Player
         private void Start()
         {
             InputManagment.OnShooting += OnStartFiring;
-            //AudioManager = this.GetComponent<AudioManager>();
         }
 
         private void OnStartFiring()
@@ -47,7 +48,7 @@ namespace planTopia.Controllers.Player
                     ray.origin = RaycastOrigin.position;
                     ray.direction = RaycastDestination.position - RaycastOrigin.position;
                     ParticleShoot.Play();
-                    //AudioManager.Play(CurrentGunSound);
+                    AudioManager.Play(CurrentGunSound);
                     DecreaseAmmunation();
 
                     if (Physics.Raycast(ray, out hitInfo))
@@ -58,10 +59,6 @@ namespace planTopia.Controllers.Player
                             var BaseGenericsEnemy = Object.GetComponent<BaseBehaviour>();
                             if (Vector3.Distance(Object.transform.position, this.transform.position) < shootingAttributes.ShootingDistance)
                             {
-                                // hitInfo.collider.gameObject.GetComponent<EnemyHealthRegulator>()?.DecreaseHealth(shootingAttributes.Damage);
-                                // BaseGenericsEnemy.startMove = false;
-                                // Object.GetComponent<DizzyActivator>().StartDizzy();
-
                                 if (Object.GetComponent<BossAI>() != null)
                                 {
                                     Object.GetComponent<BossAI>().TakeDamage(shootingAttributes.Damage);
@@ -76,7 +73,7 @@ namespace planTopia.Controllers.Player
                         Debug.DrawLine(ray.origin, hitInfo.point, Color.red, 4f);
                     }
                 }
-//                else AudioManager.Play(EmptyGunSound);
+                else AudioManager.Play(EmptyGunSound);
             }
 
         }

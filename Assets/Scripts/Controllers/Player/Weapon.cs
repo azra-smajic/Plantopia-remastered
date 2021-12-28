@@ -17,14 +17,14 @@ namespace planTopia.Controllers.Player
         private Text UIAmmunation;
         [SerializeField]
         private SFX GunLoadingSound;
+        [SerializeField] 
+        private AudioManager AudioManager;
         private SkinnedMeshRenderer Renderer { get; set; }
-        private AudioManager AudioManager { get; set; }
 
 
         private void Start()
         {
             Renderer = this.GetComponentInChildren<SkinnedMeshRenderer>();
-            AudioManager = this.GetComponent<AudioManager>();
             SetGreenWeapon();
         }
         private void SetWeaponAndSound(ShootingAttributes Gun)
