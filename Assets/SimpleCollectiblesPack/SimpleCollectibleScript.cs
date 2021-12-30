@@ -43,7 +43,7 @@ public class SimpleCollectibleScript : MonoBehaviour {
 
 	public void Collect(GameObject player)
 	{
-		if (CollectibleType == CollectibleTypes.Life && player.GetComponent<PlayerHealth>().Hearts.Where(x => x.gameObject.activeInHierarchy).ToList().Count == 3)
+		if (CollectibleType == CollectibleTypes.Life && player.GetComponent<PlayerHealth>().CurrentCountOfLifes==3)
 			return;
 		if (collectSound)
 			AudioSource.PlayClipAtPoint(collectSound, transform.position);
@@ -73,14 +73,9 @@ public class SimpleCollectibleScript : MonoBehaviour {
 		}
 		if (CollectibleType == CollectibleTypes.Life)
 		{
-			var heartCounter = player.GetComponent<PlayerHealth>().CountOfLifes;
-			player.GetComponent<PlayerHealth>().Hearts[heartCounter].gameObject.SetActive(true);
-			player.GetComponent<PlayerHealth>().CountOfLifes++;
-
+			player.GetComponent<PlayerHealth>().CurrentCountOfLifes++;
 		}
 
 		Destroy(gameObject);
-		
-		
 	}
 }

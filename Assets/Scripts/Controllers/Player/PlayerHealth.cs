@@ -33,9 +33,8 @@ namespace planTopia.Controllers.Player
         private SFX GameOverSound;
         [SerializeField]
         private ParticleSystem HitEffect;
-       
-        public List<Image> Hearts;
-
+        [SerializeField]
+        private Text Hearts;
         [SerializeField]
         private Transform GameOver;
         [SerializeField]
@@ -44,6 +43,9 @@ namespace planTopia.Controllers.Player
         private CameraShake CameraShake;
         [SerializeField]
         private AudioManager AudioManager;
+        [SerializeField]
+        private int CountOfLifes;
+        public int CurrentCountOfLifes;
         private PlayerAnimationController Animator { get; set; }
         private PlayerController Controller { get; set; }
         private Weapon Weapons { get; set; }
@@ -51,7 +53,6 @@ namespace planTopia.Controllers.Player
 
         private float NextDecreaseHealth;
         public bool isDeath = false;
-        public int CountOfLifes;
 
         private void Start()
         {
@@ -59,7 +60,8 @@ namespace planTopia.Controllers.Player
             Controller = this.GetComponent<PlayerController>();
             Weapons = this.GetComponent<Weapon>();
             HealthText.text = CurrentHealth.ToString() + "%";
-            CountOfLifes = Hearts?.Count ?? 0;
+            Hearts.text = $"x{CountOfLifes}";
+            CurrentCountOfLifes = CountOfLifes;
         }
         private void OnEnable()
         {
@@ -69,7 +71,6 @@ namespace planTopia.Controllers.Player
 
         private void Update()
         {
-            DecreaseHealthOnTime();
             if (CurrentHealth >= 0)
                 HealthText.text = CurrentHealth.ToString() + "%";
             else HealthText.text = "0%";
@@ -88,14 +89,15 @@ namespace planTopia.Controllers.Player
         {
             if (CountOfLifes > 1)
             {
-                Hearts[CountOfLifes - 1].gameObject.SetActive(false);
                 CountOfLifes--;
+                Hearts.text = $"x{CountOfLifes}";
             }
             else
             {
                 StartPosition = GameOver;
-                Hearts.ForEach(x => x.gameObject.SetActive(true));
-                CountOfLifes = Hearts?.Count ?? 0;
+                CountOfLifes = 3;
+                Hearts.text = $"x{CountOfLifes}";
+                CurrentCountOfLifes=CountOfLifes;
                 GameOverImage.gameObject.SetActive(true);
                 Invoke(nameof(SetGameOverImageFalse), 3f);
                 AudioManager.Play(GameOverSound);
@@ -104,24 +106,13 @@ namespace planTopia.Controllers.Player
 
 
         private void SetGameOverImageFalse() => GameOverImage.gameObject.SetActive(false);
-
-        private void DecreaseHealthOnTime()
-        {
-            if (Time.time > NextDecreaseHealth && !isDeath)
-            {
-                //CurrentHealth -=DecrementHealth;
-                //HealthBar.fillAmount = CurrentHealth/100;
-                //NextDecreaseHealth = Time.time + TimeOfDecreaseHealth;
-                //CheckDeath();
-            }
-        }
-
+        
         public void DecreaseHealth(float damage)
         {
-            //CurrentHealth -= damage;
-            //HealthBar.fillAmount = CurrentHealth/100;
+            CurrentHealth -= damage;
+            HealthBar.fillAmount = CurrentHealth/100;
             CameraShake.StartShake();
-            //CheckDeath();
+            CheckDeath();
             AudioManager.Play(DecreaseHealthSound);
             HitEffect.Play();
         }

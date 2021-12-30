@@ -19,4 +19,4 @@ MonoBehaviour:
   CurrentAmmunation: 69
   Weapon: {fileID: 2100000, guid: d3dbb24da05eb8f448e633fa38f78673, type: 2}
   GunSound: {fileID: 11400000, guid: 6898c403d306724409763a2b59570480, type: 2}
-  UIImage: {fileID: 21300000, guid: 2eaa9c84d51637b4ea7ae838cf22ee43, type: 3}
+  UIImage: {fileID: 21300000, guid: d5149f1b108098342957fce40ef435f2, type: 3}
