@@ -31,7 +31,9 @@ namespace planTopia.Controllers.Player
         private SFX DecreaseHealthSound;
         [SerializeField]
         private SFX GameOverSound;
-
+        [SerializeField]
+        private ParticleSystem HitEffect;
+       
         public List<Image> Hearts;
 
         [SerializeField]
@@ -107,20 +109,21 @@ namespace planTopia.Controllers.Player
         {
             if (Time.time > NextDecreaseHealth && !isDeath)
             {
-                CurrentHealth -=DecrementHealth;
-                HealthBar.fillAmount = CurrentHealth/100;
-                NextDecreaseHealth = Time.time + TimeOfDecreaseHealth;
-                CheckDeath();
+                //CurrentHealth -=DecrementHealth;
+                //HealthBar.fillAmount = CurrentHealth/100;
+                //NextDecreaseHealth = Time.time + TimeOfDecreaseHealth;
+                //CheckDeath();
             }
         }
 
         public void DecreaseHealth(float damage)
         {
-            CurrentHealth -= damage;
-            HealthBar.fillAmount = CurrentHealth/100;
+            //CurrentHealth -= damage;
+            //HealthBar.fillAmount = CurrentHealth/100;
             CameraShake.StartShake();
-            CheckDeath();
+            //CheckDeath();
             AudioManager.Play(DecreaseHealthSound);
+            HitEffect.Play();
         }
 
         private void CheckDeath()

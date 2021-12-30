@@ -109,10 +109,12 @@ public class DayNightRotation : MonoBehaviour
             if (IsDay)
             {
                 OnTimeOfDayChanged?.Invoke(IsDay);
+                SpecialObjects.SetActive(true);
                 Invoke(nameof(SetEnemiesActiveFalse), 1.4f);
             }
             else
             {
+                SpecialObjects.SetActive(false);
                 Enemies.SetActive(true);
                 OnTimeOfDayChanged?.Invoke(IsDay);
             }

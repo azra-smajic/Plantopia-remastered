@@ -15,8 +15,8 @@ MonoBehaviour:
   Damage: 4
   ShootingDistance: 4
   FireRate: 0.5
-  MaxAmmunation: 10
-  CurrentAmmunation: 9
+  MaxAmmunation: 100
+  CurrentAmmunation: 95
   Weapon: {fileID: 2100000, guid: 1022c7edf1db176479a6e1d4958163ec, type: 2}
   GunSound: {fileID: 11400000, guid: 97ee5beb63cf9a744b3571ff700dd1c1, type: 2}
   UIImage: {fileID: 21300000, guid: e1c106e96498236478009f467d16d493, type: 3}
